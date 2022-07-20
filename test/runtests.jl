@@ -67,4 +67,56 @@ A {
 """))
     end
 
+    @testset "breakable" begin
+
+        s = repeat("1", 100)
+        preferredLineWidth = 20
+        opts = PD.RenderOptions(preferredLineWidth)
+        new_io = IOBuffer()
+        
+        PD.render!(opts, PD.compileToPrims(
+            PD.seg(s) * PD.breakable(PD.seg("next line"))
+        )) do s
+            write(new_io, s)
+        end
+        
+        @test equal_s(String(take!(new_io)), raw"""
+1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111
+next line
+""")
+    end
+
+    @testset "align" begin
+        mk_eq(x, y) = PD.seg(x) + PD.seg("=") + PD.seg(y)
+        doc_o = PD.seg("begin") + PD.align(
+            PD.vsep(
+                mk_eq("x", "1"),
+                mk_eq("y", "2"),
+                mk_eq("z", "3"),
+            )
+        )
+        @test equal_s(string(doc_o), raw"""
+begin x = 1
+      y = 2
+      z = 3
+""")
+    
+    end
+
+    @testset "corner cases" begin 
+        @test PD.compileToPrims(PD.align(PD.empty)) == PD.compileToPrims(PD.empty)
+        @test PD.compileToPrims(PD.empty >> 2) == PD.compileToPrims(PD.empty << 2)
+    end
+
+    @testset "common" begin 
+        let (==) = equal_s
+            @test string(PD.parens(PD.pretty(1))) == "(1)"
+            @test string(PD.brace(PD.pretty(1))) == "{1}"
+            @test string(PD.angle(PD.pretty(1))) == "<1>"
+            @test string(PD.bracket(PD.pretty(1))) == "[1]"
+            @test string(PD.listof(PD.pretty(1), PD.pretty(2))) == "12"
+            @test string(PD.seplistof(PD.comma, [PD.pretty(1), PD.pretty(2)])) == "1,2"
+        end
+    end
+
 end

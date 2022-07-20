@@ -203,7 +203,7 @@ function seg(s::AbstractString)
 end
 
 function vsep(sections::Doc...)
-    vsep(collect(sections))
+    vsep(collect(Doc, sections))
 end
 
 function vsep(sections::AbstractVector)
@@ -260,7 +260,7 @@ A document representing a single comma.
 const comma = seg(",")
 
 listof(elements::AbstractVector) = listof(collect(Doc, elements))
-
+listof(elements::Doc...) = listof(collect(Doc, elements))
 
 function listof(elements::Vector{Doc})
     if isempty(elements)
@@ -273,7 +273,7 @@ function listof(elements::Vector{Doc})
         for each in tail
             result *= each
         end
-        return res
+        return result
     end
 end
 
@@ -297,7 +297,7 @@ function seplistof(sep::Doc, elements::Vector{Doc})
         for each in tail
             result *= sep * each
         end
-        return res
+        return result
     end
 end
 
