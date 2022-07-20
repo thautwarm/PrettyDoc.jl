@@ -1,0 +1,13 @@
+name = "PrettyDoc"
+uuid = "084d9603-a20b-479c-b400-a9298a0cdd15"
+authors = ["thautwarm <twshere@outlook.com> and contributors"]
+version = "0.1.0"
+
+[compat]
+julia = "1"
+
+[extras]
+Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
+
+[targets]
+test = ["Test"]
