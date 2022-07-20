@@ -19,7 +19,23 @@ function render_block(self::Block)
 end
 
 
-
+function equal_s(a::AbstractString, b::AbstractString)
+    a = strip(a)
+    b = strip(b)
+    xs_a = split(a, "\n")
+    xs_b = split(b, "\n")
+    if length(xs_a) != length(xs_b)
+        return false
+    end
+    for i in eachindex(xs_a)
+        x_a = xs_a[i]
+        x_b = xs_b[i]
+        if rstrip(x_a) != rstrip(x_b)
+            return false
+        end
+    end
+    return true
+end
 
 @testset "PrettyDoc.jl" begin
     # Write your tests here.
@@ -39,7 +55,7 @@ end
             ]
         )
 
-        @test string(render_block(block)) === strip(raw"""
+        @test equal_s(string(render_block(block)), strip(raw"""
 A {
     C "ccc"
     B {
@@ -48,7 +64,7 @@ A {
     C "ccc"
     C "ccc"
 }
-""")
+"""))
     end
 
 end
