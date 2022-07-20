@@ -1,6 +1,7 @@
 using Test
-import PrettyDoc as PD
+import PrettyDoc
 
+const PD = PrettyDoc
 const squote = "\""
 struct Block
     name::String
