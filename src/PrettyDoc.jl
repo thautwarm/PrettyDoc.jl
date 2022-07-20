@@ -175,7 +175,7 @@ function render!(fwrite::Function, opts::RenderOptions, sentences::Vector{Vector
                 @case PDoc_PushCurrentIndent
                     push!(levels, Level(col, false))
                 @case PDoc_PushIndent(delta)
-                    push!(levels, Level(levels[end].level + delta, false))
+                    push!(levels, Level(max(0, levels[end].level + delta), false))
                 @case PDoc_PopIndent
                     pop!(levels)
             end # end switch
@@ -225,7 +225,9 @@ Align the document using the current indentation.
 align(inner::Doc) = Doc_Align(inner)
 
 """
-Indent a document by `delta` spaces.
+Indent a document by `delta` spaces. Negative `delta`s are allowed.
+
+P.S: You might use `doc >> 2` or `doc << 2` to indent document objects.
 """
 indent(delta::Int, inner::Doc) = Doc_Indent(i, inner)
 
