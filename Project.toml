@@ -3,6 +3,9 @@ uuid = "084d9603-a20b-479c-b400-a9298a0cdd15"
 authors = ["thautwarm <twshere@outlook.com> and contributors"]
 version = "0.1.0"
 
+[deps]
+MLStyle = "d8e11817-5142-5d16-987a-aa16d5891078"
+
 [compat]
 julia = "1"
 
