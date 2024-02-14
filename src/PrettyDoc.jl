@@ -19,7 +19,7 @@ Combinatorial documentation objects, which has the following constructors:
 - `Doc_Concat(left::Doc, right::Doc)`
     Concatenates two documents,and the line is not broken.
 - `Doc_VSep(elements::Vector{Doc})`
-    Concatenates a vector of documents with the line separator `"\n"`.
+    Concatenates a vector of documents with the line separator `"\\n"`.
 - `Doc_Align(document::Doc)`
     Aligns the document using the current indentation.
 - `Doc_Indent(delta::Int, document::Doc)`
